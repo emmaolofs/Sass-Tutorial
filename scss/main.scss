@@ -1,0 +1,74 @@
+@import './resets';
+@import './variables';
+
+/*functions, which allows you to define complex operations and values that you can
+re-use throughout your stylesheet
+should be used to compute values and return values
+*/
+@function weight($weight-name) {
+    @return map-get($font-weights, $weight-name);
+}
+
+/*mix-ins, should be used to define styles*/
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin theme($light-theme: true) {
+    @if $light-theme {
+        background-color: lighten($primary-color, 100%);
+        color: darken($text-color, 100%)
+    }
+}
+
+@mixin mobile {
+    @media (max-width: $mobile) {
+        @content;
+    }
+}
+
+body {
+    background: $primary-color;
+    color: $text-color;
+}
+
+.main {
+    @include flexCenter(row);
+    width: 80%;
+    margin: 0 auto;
+
+    /*nesting, &=this equals the parent (which means we can take "main" out of the classname.
+    but only setting "&_paragraph" will lead to that the CSS file creates the ".main_paragraph"
+    outside of the main tag. To fix that we have to use interpolation, wrapping the ampersand and generating
+    "#{&}".
+    */
+    #{&}_paragraph1 {
+        font-weight: weight(bold);
+
+        &:hover {
+            color:pink;
+        }
+    }
+
+    /*extensions, extend an element, so the element that we extend it to would inherit all the styles
+    from the selected element. useful if you want to inherit the styles form one element, but do small configurations
+    to the second element that should not be on first*/
+    #{&}_paragraph2 {
+        @extend .main_paragraph1;
+
+        &:hover {
+            color: $accent-color;
+        }
+    }
+
+    @include mobile {
+        flex-direction: column;
+    }
+}
+
+.light {
+    @include theme($light-theme: true);
+}

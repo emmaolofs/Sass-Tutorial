@@ -1,0 +1,53 @@
+/*Scss files that start with an underscore is ignored by the compiler*/
+/*by using partials we can break up in partial components, so we can work on them individually*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*functions, which allows you to define complex operations and values that you can
+re-use throughout your stylesheet
+should be used to compute values and return values
+*/
+/*mix-ins, should be used to define styles*/
+body {
+  background: #272727;
+  color: #fff;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  width: 80%;
+  margin: 0 auto;
+  /*nesting, &=this equals the parent (which means we can take "main" out of the classname.
+  but only setting "&_paragraph" will lead to that the CSS file creates the ".main_paragraph"
+  outside of the main tag. To fix that we have to use interpolation, wrapping the ampersand and generating
+  ".main".
+  */
+  /*extensions, extend an element, so the element that we extend it to would inherit all the styles
+  from the selected element. useful if you want to inherit the styles form one element, but do small configurations
+  to the second element that should not be on first*/
+}
+.main .main_paragraph1, .main .main_paragraph2 {
+  font-weight: 700;
+}
+.main .main_paragraph1:hover, .main .main_paragraph2:hover {
+  color: pink;
+}
+.main .main_paragraph2:hover {
+  color: #ff652f;
+}
+@media (max-width: 400px) {
+  .main {
+    flex-direction: column;
+  }
+}
+
+.light {
+  background-color: white;
+  color: black;
+}/*# sourceMappingURL=main.css.map */
